@@ -28,23 +28,29 @@ public class Day11SecondTask {
 			for (int j = 1; j < seats[0].length - 1; j++) {
 				if (seats[i][j] == 'L' && canSeeNoOccupiedSeats(seats, i, j)) {
 					updatedSeats[i][j] = '#';
-				} else if (seats[i][j] == '#') {
-					int occupied = 0;
-
-					for (Direction direction : Direction.values()) {
-						if (!canSeeNoOccupiedSeats(seats, i, j, direction)) {
-							occupied++;
-						}
-					}
-
-					if (occupied >= 5) {
-						updatedSeats[i][j] = 'L';
-					}
+				} else if (seats[i][j] == '#' && canSeeAtLeastFiveOccupiedSeats(seats, i, j)) {
+					updatedSeats[i][j] = 'L';
 				}
 			}
 		}
 
 		return updatedSeats;
+	}
+
+	private boolean canSeeAtLeastFiveOccupiedSeats(char[][] seats, int i, int j) {
+		int occupied = 0;
+
+		for (Direction direction : Direction.values()) {
+			if (!canSeeNoOccupiedSeats(seats, i, j, direction)) {
+				occupied++;
+			}
+		}
+
+		if (occupied >= 5) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean canSeeNoOccupiedSeats(char[][] seats, int i, int j) {
